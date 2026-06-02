@@ -9,6 +9,9 @@
 build/
 !gradle/wrapper/gradle-wrapper.jar
 
+# Kotlin compiler local cache / session locks
+.kotlin/
+
 # IntelliJ Platform Gradle Plugin (generated local artifacts cache)
 .intellijPlatform/
 
