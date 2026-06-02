@@ -13,7 +13,7 @@
     <resource-bundle>messages.WorktreeBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Worktrees" anchor="right"
+        <toolWindow id="Worktrees" anchor="right" icon="/icons/worktree.svg"
                     factoryClass="io.github.sarcasticvlad.worktree.ui.WorktreeToolWindowFactory"/>
         <notificationGroup id="Git Worktree" displayType="BALLOON"/>
     </extensions>

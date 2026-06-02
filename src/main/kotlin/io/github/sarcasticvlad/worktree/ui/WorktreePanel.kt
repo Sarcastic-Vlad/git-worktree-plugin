@@ -57,6 +57,13 @@ class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, 
 
     fun refresh() {
         if (!refreshing.compareAndSet(false, true)) return
+        val hasRepo = WorktreeGitService.getInstance(project).primaryRepository() != null
+        if (!hasRepo) {
+            listModel.replaceAll(emptyList())
+            list.emptyText.text = "No Git repository in this project"
+            refreshing.set(false)
+            return
+        }
         object : Task.Backgroundable(project, "Loading worktrees", false) {
             private var loaded: List<Worktree> = emptyList()
             private var error: String? = null
