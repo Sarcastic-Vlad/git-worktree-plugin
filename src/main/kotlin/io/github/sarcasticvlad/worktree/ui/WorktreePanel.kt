@@ -7,11 +7,15 @@ import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.SimpleToolWindowPanel
 import com.intellij.ui.CollectionListModel
+import com.intellij.ui.DoubleClickListener
 import com.intellij.ui.ScrollPaneFactory
 import com.intellij.ui.components.JBList
+import io.github.sarcasticvlad.worktree.actions.OpenWorktreeAction
 import io.github.sarcasticvlad.worktree.actions.RefreshWorktreesAction
 import io.github.sarcasticvlad.worktree.git.WorktreeGitService
 import io.github.sarcasticvlad.worktree.model.Worktree
+import io.github.sarcasticvlad.worktree.open.WorktreeOpener
+import java.awt.event.MouseEvent
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.ListSelectionModel
 
@@ -28,11 +32,20 @@ class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, 
     init {
         val group = DefaultActionGroup().apply {
             add(RefreshWorktreesAction(this@WorktreePanel))
+            add(OpenWorktreeAction(this@WorktreePanel))
         }
         val toolbar = ActionManager.getInstance().createActionToolbar("WorktreePanel", group, true)
         toolbar.targetComponent = this
         setToolbar(toolbar.component)
         setContent(ScrollPaneFactory.createScrollPane(list))
+        object : DoubleClickListener() {
+            override fun onDoubleClick(event: MouseEvent): Boolean {
+                val wt = selectedWorktree() ?: return false
+                if (wt.isCurrent || wt.isBare) return false
+                WorktreeOpener.open(wt.path, project, newWindow = true)
+                return true
+            }
+        }.installOn(list)
         refresh()
     }
 
