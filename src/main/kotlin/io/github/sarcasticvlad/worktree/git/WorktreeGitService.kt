@@ -5,6 +5,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import git4idea.commands.Git
 import git4idea.commands.GitCommand
+import git4idea.commands.GitCommandResult
 import git4idea.commands.GitLineHandler
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
@@ -33,6 +34,26 @@ class WorktreeGitService(private val project: Project) {
             .map { it.copy(isCurrent = it.path.trimEnd('/') == rootPath) }
         return Result.success(worktrees)
     }
+
+    fun add(path: String, source: WorktreeSource): GitCommandResult {
+        val repo = primaryRepository() ?: return GitCommandResult.error("No Git repository")
+        val handler = GitLineHandler(project, repo.root, GitCommand.WORKTREE)
+        handler.addParameters(WorktreeArgsBuilder.buildAddArgs(path, source))
+        return Git.getInstance().runCommand(handler)
+    }
+
+    /** Имена локальных веток для выбора в диалоге. */
+    fun localBranchNames(): List<String> =
+        primaryRepository()?.branches?.localBranches?.map { it.name }?.sorted() ?: emptyList()
+
+    /** Имя текущей ветки или null. */
+    fun currentBranchName(): String? = primaryRepository()?.currentBranch?.name
+
+    /** Родительская директория корня репозитория (для дефолтного пути). */
+    fun repoParentPath(): String? = primaryRepository()?.root?.parent?.path
+
+    /** Имя корневой папки репозитория. */
+    fun repoName(): String? = primaryRepository()?.root?.name
 
     companion object {
         fun getInstance(project: Project): WorktreeGitService = project.service()

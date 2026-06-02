@@ -10,6 +10,7 @@ import com.intellij.ui.CollectionListModel
 import com.intellij.ui.DoubleClickListener
 import com.intellij.ui.ScrollPaneFactory
 import com.intellij.ui.components.JBList
+import io.github.sarcasticvlad.worktree.actions.AddWorktreeAction
 import io.github.sarcasticvlad.worktree.actions.OpenWorktreeAction
 import io.github.sarcasticvlad.worktree.actions.RefreshWorktreesAction
 import io.github.sarcasticvlad.worktree.git.WorktreeGitService
@@ -32,6 +33,7 @@ class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, 
     init {
         val group = DefaultActionGroup().apply {
             add(RefreshWorktreesAction(this@WorktreePanel))
+            add(AddWorktreeAction(this@WorktreePanel))
             add(OpenWorktreeAction(this@WorktreePanel))
         }
         val toolbar = ActionManager.getInstance().createActionToolbar("WorktreePanel", group, true)
