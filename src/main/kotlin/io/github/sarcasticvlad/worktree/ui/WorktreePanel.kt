@@ -13,6 +13,7 @@ import com.intellij.ui.components.JBList
 import io.github.sarcasticvlad.worktree.actions.AddWorktreeAction
 import io.github.sarcasticvlad.worktree.actions.OpenWorktreeAction
 import io.github.sarcasticvlad.worktree.actions.RefreshWorktreesAction
+import io.github.sarcasticvlad.worktree.actions.RemoveWorktreeAction
 import io.github.sarcasticvlad.worktree.git.WorktreeGitService
 import io.github.sarcasticvlad.worktree.model.Worktree
 import io.github.sarcasticvlad.worktree.open.WorktreeOpener
@@ -35,6 +36,7 @@ class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, 
             add(RefreshWorktreesAction(this@WorktreePanel))
             add(AddWorktreeAction(this@WorktreePanel))
             add(OpenWorktreeAction(this@WorktreePanel))
+            add(RemoveWorktreeAction(this@WorktreePanel))
         }
         val toolbar = ActionManager.getInstance().createActionToolbar("WorktreePanel", group, true)
         toolbar.targetComponent = this

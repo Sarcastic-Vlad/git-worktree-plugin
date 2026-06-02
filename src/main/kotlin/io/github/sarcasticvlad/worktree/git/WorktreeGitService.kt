@@ -42,6 +42,13 @@ class WorktreeGitService(private val project: Project) {
         return Git.getInstance().runCommand(handler)
     }
 
+    fun remove(path: String, force: Boolean): GitCommandResult {
+        val repo = primaryRepository() ?: return GitCommandResult.error("No Git repository")
+        val handler = GitLineHandler(project, repo.root, GitCommand.WORKTREE)
+        handler.addParameters(WorktreeArgsBuilder.buildRemoveArgs(path, force))
+        return Git.getInstance().runCommand(handler)
+    }
+
     /** Имена локальных веток для выбора в диалоге. */
     fun localBranchNames(): List<String> =
         primaryRepository()?.branches?.localBranches?.map { it.name }?.sorted() ?: emptyList()
