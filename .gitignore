@@ -9,6 +9,9 @@
 build/
 !gradle/wrapper/gradle-wrapper.jar
 
+# IntelliJ Platform Gradle Plugin (generated local artifacts cache)
+.intellijPlatform/
+
 # OS
 .DS_Store
 

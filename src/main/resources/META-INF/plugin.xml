@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>io.github.sarcasticvlad.gitworktree</id>
+    <name>Git Worktree</name>
+    <vendor email="vladorigwork@gmail.com" url="https://github.com/Sarcastic-Vlad">Sarcastic-Vlad</vendor>
+    <description><![CDATA[
+        Manage git worktrees from a dedicated tool window: list, create, open and remove worktrees
+        without leaving the IDE. Works in IntelliJ IDEA and Android Studio.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <resource-bundle>messages.WorktreeBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Worktrees" anchor="right"
+                    factoryClass="io.github.sarcasticvlad.worktree.ui.WorktreeToolWindowFactory"/>
+        <notificationGroup id="Git Worktree" displayType="BALLOON"/>
+    </extensions>
+</idea-plugin>
