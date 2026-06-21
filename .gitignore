@@ -1,0 +1,25 @@
+# IntelliJ IDEA / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Kotlin compiler local cache / session locks
+.kotlin/
+
+# IntelliJ Platform Gradle Plugin (generated local artifacts cache)
+.intellijPlatform/
+
+# OS
+.DS_Store
+
+# Логи внешних инструментов
+*.log
+
+# Brainstorming / planning доки (superpowers) — держим локально, не в репо
+docs/superpowers/
